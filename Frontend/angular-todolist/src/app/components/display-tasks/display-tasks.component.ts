@@ -1,5 +1,5 @@
 import { TaskService } from './../../services/task.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-display-tasks',
@@ -8,15 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './display-tasks.component.scss'
 })
 export class DisplayTasksComponent implements OnInit{
-    constructor(private taskService: TaskService){}
+    constructor(){}
+    private taskService = inject(TaskService);
 
     ngOnInit(): void {
       this.taskService.getAllTasks().subscribe(
         (data) => {
           console.log(data);
-
-        },(error)=>{
-          console.log(error);
         }
       );
     }
