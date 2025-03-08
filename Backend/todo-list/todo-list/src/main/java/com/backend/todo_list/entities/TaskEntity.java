@@ -22,7 +22,6 @@ public class TaskEntity {
 
 
     @Column(name = "TSK_CREATED_AT", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     private Date created_at;
 
 
@@ -30,7 +29,6 @@ public class TaskEntity {
     private int priority;
 
     @Column(name = "TSK_DUE_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date due_date;
 
     // GETTERS
