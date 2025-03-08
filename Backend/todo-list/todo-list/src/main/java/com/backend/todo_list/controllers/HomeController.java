@@ -1,4 +1,4 @@
-package com.backend.todo_list.controller;
+package com.backend.todo_list.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
