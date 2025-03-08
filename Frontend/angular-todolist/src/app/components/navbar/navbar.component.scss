@@ -1,0 +1,16 @@
+.search-add-container {
+  display: flex;
+  align-items: start;
+  gap: 10px; 
+}
+
+.search-input {
+  flex-grow: 1; 
+}
+
+.add-button {
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
