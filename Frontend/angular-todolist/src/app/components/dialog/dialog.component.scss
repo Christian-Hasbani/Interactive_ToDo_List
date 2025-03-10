@@ -1,0 +1,20 @@
+  .dialog-title {
+    display: flex;
+    justify-content: center;  /* Centers the title horizontally */
+    align-items: center;  /* Centers vertically (optional) */
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    padding: 12px 0; /* Adds top and bottom spacing */
+    text-align: center;
+  }
+  
+  mat-divider {
+    margin: 8px 0 16px; /* Adds space between the title and content */
+    background-color: #ccc;
+  }
+
+  .form-field{
+    width: 100%;
+  }
+  

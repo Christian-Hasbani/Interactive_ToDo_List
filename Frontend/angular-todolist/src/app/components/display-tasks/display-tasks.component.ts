@@ -12,10 +12,10 @@ export class DisplayTasksComponent implements OnInit{
     private taskService = inject(TaskService);
 
     ngOnInit(): void {
-      this.taskService.getAllTasks().subscribe(
-        (data) => {
-          console.log(data);
-        }
-      );
+      // this.taskService.getAllTasks().subscribe(
+      //   (data) => {
+      //     console.log(data);
+      //   }
+      // );
     }
 }

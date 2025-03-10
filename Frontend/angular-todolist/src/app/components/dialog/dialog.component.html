@@ -1,0 +1,39 @@
+<div>
+    <h2 class="dialog-title">New Task Dialog</h2>
+    <mat-divider></mat-divider>
+  
+    <mat-dialog-content>
+      <mat-form-field class="form-field">
+        <mat-label>Task Name</mat-label>
+        <input matInput type="text" [(ngModel)]="taskName" >
+        @if (taskName) {
+          <button matSuffix mat-icon-button aria-label="Clear" (click)="taskName=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </mat-form-field>
+  
+      <mat-form-field class="form-field">
+        <mat-label>Due Date</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="dueDate">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+
+      <mat-form-field class="form-field">
+        <mat-label>Priority</mat-label>
+        <mat-select [(ngModel)]="selectedPriority">
+          @for (option of priorityOptions; track option){
+            <mat-option [value] = "option.value">{{ option.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+       
+    </mat-dialog-content>
+  
+    <mat-dialog-actions>
+      <button mat-button mat-dialog-close>Close</button>
+      <button mat-flat-button color="primary" (click)="submitFunction()">Add</button>
+    </mat-dialog-actions>
+  </div>
