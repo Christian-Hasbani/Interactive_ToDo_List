@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule, MatOptionModule, provideNativeDateAdapter } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { PriorityOptions } from '../../constants/task.constants';
 
 interface PriorityOption {
   name: string,
@@ -36,11 +37,7 @@ interface PriorityOption {
 export class DialogComponent {
   taskName: string = '';
   dueDate: Date  = new Date();
-  priorityOptions: PriorityOption[] = [
-    { name : "Urgent", value: 2},
-    { name: "Important", value: 1 },
-    { name: "Not Important", value: 0 }
-  ]; 
+  priorityOptions = PriorityOptions;
   selectedPriority: Number | null = null;
   
   constructor(private dialogRef:MatDialogRef<DialogComponent>){}

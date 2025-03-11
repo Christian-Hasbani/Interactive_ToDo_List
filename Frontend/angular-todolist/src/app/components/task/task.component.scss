@@ -1,0 +1,29 @@
+.card-content-container {
+    display: flex; 
+    align-items: center; 
+    gap: 16px; 
+    padding: 16px; 
+  }
+  
+  .task-info {
+    display: flex; 
+    align-items: center; 
+    gap: 16px; 
+    flex: 1; 
+  }
+  
+  .task-info p {
+    margin: 0; 
+    padding-right: 50px;
+  }
+  
+  .task-buttons-container {
+    display: flex; 
+    gap: 8px; 
+    white-space: nowrap; 
+  }
+
+  .task-done {
+    text-decoration: line-through; 
+    opacity: 0.7; 
+  }

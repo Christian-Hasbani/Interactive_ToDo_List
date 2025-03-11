@@ -1,0 +1,22 @@
+<div>
+  <mat-card appearance="outlined" style="margin-bottom: 20px;">
+    <div class="card-content-container">
+      <div class="task-info">
+        <mat-checkbox [(ngModel)]="task.taskIsDone" (change)="onCheckboxChange($event)">
+        </mat-checkbox>
+        <strong><p style="font-size: x-large;" [class.task-done]="task.taskIsDone">{{ task.title }}</p></strong>
+        <p><strong>Priority: </strong> {{ getPriorityName(task.priority) }}</p>
+        <p><strong>Due:</strong> {{ task.dueDate | date:'dd/MM/yyyy' }}</p>
+      </div>
+
+      <div class="task-buttons-container">
+        <button mat-icon-button aria-label="Edit button">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Delete button">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card>
+</div>
