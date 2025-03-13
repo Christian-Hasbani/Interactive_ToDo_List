@@ -6,15 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule, MatCheckboxChange } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { PriorityOptions } from '../../constants/task.constants';
-
-interface Task {
-  id: number;
-  title: string;
-  taskIsDone: boolean;
-  createdAt: Date;
-  priority: number;
-  dueDate: Date;
-}
+import { Task } from '../../model/task.model';
 
 @Component({
   selector: 'app-task',
@@ -32,18 +24,11 @@ interface Task {
 })
 
 export class TaskComponent {
-  // task: Task = {
-  //   id: 0,
-  //   title: 'Test Task',
-  //   taskIsDone: true,
-  //   createdAt: new Date(),
-  //   priority: 0,
-  //   dueDate: new Date(),
-  // };
+
   @Input() task!: Task;
 
   onCheckboxChange(event: MatCheckboxChange) {
-    this.task.taskIsDone = event.checked; 
+    this.task.task_is_done = event.checked; 
   }
 
   getPriorityName(priorityValue: number): string {

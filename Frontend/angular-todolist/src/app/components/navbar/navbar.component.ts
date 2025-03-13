@@ -17,8 +17,14 @@ export class NavbarComponent {
   constructor(private dialog: MatDialog) {}
 
   openDialog(): void {
-    this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponent, {
       width: '400px', 
     });
+    
+    dialogRef.afterClosed().subscribe(result =>{
+      if(result){
+        // Dialog closed with task added
+      }
+    })
   }
 }

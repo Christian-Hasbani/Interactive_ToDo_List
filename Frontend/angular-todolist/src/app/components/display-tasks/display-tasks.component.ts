@@ -1,17 +1,13 @@
+import { TaskUpdateService } from './../../services/taskUpdate.service';
 import { TaskService } from './../../services/task.service';
 import { Component, inject, OnInit } from '@angular/core';
 import { TaskComponent } from "../task/task.component";
 import { CommonModule } from '@angular/common';
+import { TaskResponse } from '../../model/task.response.model';
+import { Task } from '../../model/task.model';
 
 
-interface Task {
-  id: number;
-  title: string;
-  taskIsDone: boolean;
-  createdAt: Date;
-  priority: number;
-  dueDate: Date;
-}
+
 
 @Component({
   selector: 'app-display-tasks',
@@ -20,22 +16,30 @@ interface Task {
   styleUrl: './display-tasks.component.scss'
 })
 export class DisplayTasksComponent implements OnInit{
-    tasks: Task[] = [
-      {id: 0, title: "Task 1", taskIsDone: true, createdAt: new Date(), priority: 2, dueDate: new Date()},
-      {id: 1, title: "Task 2", taskIsDone: false, createdAt: new Date(), priority: 1, dueDate: new Date()},
-      {id: 2, title: "Task 3", taskIsDone: false, createdAt: new Date(), priority: 1, dueDate: new Date()},
-      {id: 3, title: "Task 4", taskIsDone: false, createdAt: new Date(), priority: 0, dueDate: new Date()},
-    ];
+    tasks: Task[] = [];
 
-    constructor(){}
+    constructor(private taskUpdateService:TaskUpdateService){}
     private taskService = inject(TaskService);
 
-    ngOnInit(): void {
-      this.taskService.getAllTasks().subscribe(
-        (data) => {
-          //TODO fix the type here
-          // this.tasks = data;
-        }
-      );
+    ngOnInit() {
+      this.loadTasks();
+      //Update the list of tasks when a new task is added      
+      this.taskUpdateService.taskAdded$.subscribe(() => {
+        // this.loadTasks();
+      });
+    }
+
+    loadTasks(){
+      this.taskService.getAllTasks().subscribe(responses => {
+        this.tasks = responses.map(response => ({
+          id: response.id,
+          title: response.title,
+          task_is_done: response.task_is_done,
+          created_at: response.created_at ? new Date(response.created_at) : new Date(),
+          priority: response.priority ?? 0,
+          due_date: response.due_date ? new Date(response.due_date) : new Date()
+        }));
+      });
+
     }
 }
