@@ -34,6 +34,8 @@
   
     <mat-dialog-actions>
       <button mat-button mat-dialog-close>Close</button>
-      <button mat-flat-button color="primary" (click)="submitFunction()">Add</button>
+      <button mat-raised-button color="primary" (click)="submitFunction()" [disabled]="isSubmitting">
+        {{ isEditMode ? 'Update' : 'Add' }}
+      </button>
     </mat-dialog-actions>
   </div>

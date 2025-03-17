@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogComponent } from '../add-edit-dialog/addEditDialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 

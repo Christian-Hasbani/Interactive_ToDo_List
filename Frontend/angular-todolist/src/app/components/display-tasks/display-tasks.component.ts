@@ -1,45 +1,82 @@
-import { TaskUpdateService } from './../../services/taskUpdate.service';
-import { TaskService } from './../../services/task.service';
-import { Component, inject, OnInit } from '@angular/core';
-import { TaskComponent } from "../task/task.component";
-import { CommonModule } from '@angular/common';
+import { TaskComponent } from './../task/task.component';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { TaskService } from '../../services/task.service';
+import { TaskUpdateService } from '../../services/taskUpdate.service';
+import { Subscription } from 'rxjs';
 import { TaskResponse } from '../../model/task.response.model';
-import { Task } from '../../model/task.model';
-
-
-
+import { map } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-display-tasks',
-  imports: [TaskComponent,CommonModule],
+  imports:[
+    CommonModule,
+    TaskComponent
+  ],
   templateUrl: './display-tasks.component.html',
-  styleUrl: './display-tasks.component.scss'
+  styleUrls: ['./display-tasks.component.scss']
 })
-export class DisplayTasksComponent implements OnInit{
-    tasks: Task[] = [];
+export class DisplayTasksComponent implements OnInit, OnDestroy {
+  tasks: Array<{id: string, data: any}> = []; // Ensure task.id is a string
+  private taskAddedSubscription: Subscription | undefined;
+  private taskUpdatedSubscription: Subscription | undefined;
 
-    constructor(private taskUpdateService:TaskUpdateService){}
-    private taskService = inject(TaskService);
+  constructor(
+    private taskService: TaskService,
+    private taskUpdateService: TaskUpdateService
+  ) {}
 
-    ngOnInit() {
+  ngOnInit(): void {
+    this.loadTasks();
+
+    // Subscribe to task added/updated events
+    this.taskAddedSubscription = this.taskUpdateService.taskAdded$.subscribe(() => {
       this.loadTasks();
-      //Update the list of tasks when a new task is added      
-      this.taskUpdateService.taskAdded$.subscribe(() => {
-        // this.loadTasks();
-      });
-    }
+    });
 
-    loadTasks(){
-      this.taskService.getAllTasks().subscribe(responses => {
-        this.tasks = responses.map(response => ({
-          id: response.id,
-          title: response.title,
-          task_is_done: response.task_is_done,
-          created_at: response.created_at ? new Date(response.created_at) : new Date(),
-          priority: response.priority ?? 0,
-          due_date: response.due_date ? new Date(response.due_date) : new Date()
+    this.taskUpdatedSubscription = this.taskUpdateService.taskUpdated$.subscribe(() => {
+      this.loadTasks();
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Clean up subscriptions
+    if (this.taskAddedSubscription) {
+      this.taskAddedSubscription.unsubscribe();
+    }
+    if (this.taskUpdatedSubscription) {
+      this.taskUpdatedSubscription.unsubscribe();
+    }
+  }
+
+  loadTasks(): void {
+    this.taskService.getTasks().pipe(
+      map((taskResponses: TaskResponse[]) => {
+        // Transform TaskResponse[] to the expected format
+        return taskResponses.map(task => ({
+          id: task.id.toString(), // Convert number to string
+          data: {
+            title: task.title,
+            task_is_done: task.task_is_done,
+            created_at: task.created_at,
+            due_date: task.due_date,
+            priority: task.priority
+          }
         }));
-      });
+      })
+    ).subscribe({
+      next: (transformedData) => {
+        this.tasks = transformedData;
+      },
+      error: (err) => {
+        console.error('Error loading tasks:', err);
+      }
+    });
+  }
 
-    }
+  // Make sure the parameter type matches what's emitted from the task card
+  onTaskDeleted(taskId: string): void {
+    this.tasks = this.tasks.filter(task => task.id !== taskId);
+  }
+  
 }

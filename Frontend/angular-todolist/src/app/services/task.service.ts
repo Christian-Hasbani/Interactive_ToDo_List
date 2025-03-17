@@ -13,12 +13,21 @@ export class TaskService {
 
   constructor() { }
   
-  getAllTasks():Observable<TaskResponse[]>{
+  getTasks():Observable<TaskResponse[]>{
     return this.http.get<TaskResponse[]>(this.url);
   }
 
   createTask(task: Partial<TaskRequest>): Observable<TaskResponse> {
     return this.http.post<TaskResponse>(this.url, task);
+  }
+
+
+  updateTask(taskId: string, taskRequest: TaskRequest): Observable<any> {
+    return this.http.put(`${this.url}/${taskId}`, taskRequest);
+  }
+
+  deleteTask(taskId: string): Observable<any> {
+    return this.http.delete(`${this.url}/${taskId}`);
   }
 
 }

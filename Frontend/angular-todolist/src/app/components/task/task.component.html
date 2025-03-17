@@ -8,12 +8,11 @@
         <p><strong>Priority: </strong> {{ getPriorityName(task.priority) }}</p>
         <p><strong>Due:</strong> {{ task.due_date | date:'dd/MM/yyyy' }}</p>
       </div>
-
       <div class="task-buttons-container">
-        <button mat-icon-button aria-label="Edit button">
+        <button mat-icon-button aria-label="Edit button" (click)="onEditTask()">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button aria-label="Delete button">
+        <button mat-icon-button aria-label="Delete button" (click)="onDeleteTask()">
           <mat-icon>delete</mat-icon>
         </button>
       </div>
